@@ -41,7 +41,6 @@ public class NodeImpl extends Node {
             Message msg = inbox.next();
             if (msg instanceof ElectionMessage) {
                 ElectionMessage electionMessage = (ElectionMessage) msg;
-                System.out.println(electionMessage.getId());
                 long id = electionMessage.getId();
                 if (id > this.getID()) {
                     this.partI = true;
@@ -65,15 +64,13 @@ public class NodeImpl extends Node {
                 this.leaderId = id;
                 this.done = true;
 
-                Tools.appendToOutput("\n " + this.getID() + "received that " + id + " is the new leader");
+                Tools.appendToOutput("\n" + this.getID() + " received that " + id + " is the new leader");
 
                 if (this.getID() != id) {
                     this.elected = false;
                     this.sendElected(id);
                 }
-
             }
-
         }
     }
 
