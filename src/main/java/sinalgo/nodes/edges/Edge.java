@@ -66,7 +66,7 @@ import java.lang.reflect.InvocationTargetException;
  * All edges of this framework are unidirectional. The bidirectional edges just
  * ensure that there is an edge object in both directions.
  */
-@EqualsAndHashCode(of = {"startNode", "endNode"})
+@EqualsAndHashCode(of = { "startNode", "endNode" })
 public class Edge implements DoublyLinkedListEntry {
 
     /**
@@ -115,7 +115,8 @@ public class Edge implements DoublyLinkedListEntry {
             Edge oe = this.getOppositeEdge();
             this.setOppositeEdge(null);
             oe.setOppositeEdge(null); // set unlink oppositeEdges to avoid loops
-            this.getEndNode().getOutgoingConnections().remove(this.getEndNode(), this.getStartNode()); // remove the opposite edge
+            this.getEndNode().getOutgoingConnections().remove(this.getEndNode(), this.getStartNode()); // remove the
+                                                                                                       // opposite edge
             oe.free();
         }
     }
@@ -261,7 +262,7 @@ public class Edge implements DoublyLinkedListEntry {
      * inactive edge does not overpaint an active edge.
      *
      * @return The edge that connects the two end nodes of this edge in the other
-     * direction. Null if there is no such edge.
+     *         direction. Null if there is no such edge.
      */
     @Getter
     @Setter
@@ -325,7 +326,8 @@ public class Edge implements DoublyLinkedListEntry {
      */
     protected final void findOppositeEdge() {
         for (Edge e : this.endNode.getOutgoingConnections()) {
-            if ((e.getStartNode().getID() == this.endNode.getID()) && (e.getEndNode().getID() == this.startNode.getID())) {
+            if ((e.getStartNode().getID() == this.endNode.getID())
+                    && (e.getEndNode().getID() == this.startNode.getID())) {
                 this.setOppositeEdge(e);
                 e.setOppositeEdge(this);
                 return;
@@ -347,7 +349,8 @@ public class Edge implements DoublyLinkedListEntry {
      *
      * @param xCoord The x coordinate of the position on the screen
      * @param yCoord The y coordinate of the position on the screen
-     * @param pt     The transformation object used to translate between logic and gui
+     * @param pt     The transformation object used to translate between logic and
+     *               gui
      *               coordinates.
      * @return True if this edge covers the given position, otherwise false.
      */
@@ -436,12 +439,15 @@ public class Edge implements DoublyLinkedListEntry {
                 }
                 edge = (Edge) constructor.newInstance();
             } catch (ClassNotFoundException cNFE) {
-                throw new SinalgoFatalException("The implementation of the edge '" + nameOfSearchedEdge + "' could not be found.\n"
-                        + "Change the Type in the XML-File or implement it." + "");
+                throw new SinalgoFatalException(
+                        "The implementation of the edge '" + nameOfSearchedEdge + "' could not be found.\n"
+                                + "Change the Type in the XML-File or implement it." + "");
             } catch (IllegalArgumentException | SecurityException | IllegalAccessException | InstantiationException e) {
-                throw new SinalgoFatalException("Exception caught while creating edge '" + nameOfSearchedEdge + "'.\n" + e);
+                throw new SinalgoFatalException(
+                        "Exception caught while creating edge '" + nameOfSearchedEdge + "'.\n" + e);
             } catch (InvocationTargetException e) {
-                throw new SinalgoFatalException("Exception caught while creating edge '" + nameOfSearchedEdge + "'.\n" + e.getCause());
+                throw new SinalgoFatalException(
+                        "Exception caught while creating edge '" + nameOfSearchedEdge + "'.\n" + e.getCause());
             } catch (NoSuchMethodException e) {
                 throw new SinalgoFatalException("Cannot instanciate an edge of type '" + nameOfSearchedEdge
                         + "' for two nodes of type \n(" + from.getClass().getName() + ", " + to.getClass().getName()
